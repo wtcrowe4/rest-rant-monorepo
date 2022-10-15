@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 
 const { User } = db
 
+//Login
 router.post('/', async (req, res) => {
     const user = await User.findOne({ where: { email: req.body.email } })
     if (!user){
@@ -11,10 +12,23 @@ router.post('/', async (req, res) => {
     } else {
         const passwordMatch = bcrypt.compareSync(req.body.password, user.passwordDigest)
         if (passwordMatch){
+            req.session.userId = user.userId
             res.json(user)
         } else {
             res.json({error: 'Invalid password'})
         }
+    }
+})
+
+//Session
+router.get('/profile', async (req, res) => {
+    console.log(req.session.userId)
+    try {
+        const user = await User.findByPk(req.session.userId)
+        res.json(user)
+    }
+    catch (err) {
+        res.json(err)
     }
 })
 
