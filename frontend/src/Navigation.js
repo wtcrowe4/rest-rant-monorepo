@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import { CurrentUser } from './contexts/CurrentUser';
 
 function Navigation() {
@@ -23,10 +23,20 @@ function Navigation() {
         </>
     )
     if (currentUser) {
+        const handleLogOut = () => {
+            localStorage.removeItem('token')
+            window.location.reload()
+        }
         loginActions = (
-            <li style={{ float: 'right' }}>
-                Logged in as {currentUser.firstName} {currentUser.lastName}
-            </li>
+            <>
+                <li style={{ float: 'right' }}>
+                    <button className="btn btn-danger" onClick={handleLogOut}>Logout</button>
+                </li>
+                <li style={{ float: 'right' }}>
+                    Logged in as {currentUser.firstName} {currentUser.lastName}
+                </li>
+                
+            </>
         )
     }
 
