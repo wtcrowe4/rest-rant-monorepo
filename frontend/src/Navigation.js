@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { CurrentUser } from './contexts/CurrentUser';
 
 function Navigation() {
@@ -39,6 +39,15 @@ function Navigation() {
             </>
         )
     }
+    //Add place as admin
+    let addPlaceButton = null
+    if (currentUser?.role === 'admin') {
+        addPlaceButton = (
+            <li>
+                <a href="#" onClick={() => history.push("/places/new")}>Add Place</a>
+            </li>
+        )
+    }
 
     return (
         <nav>
@@ -54,9 +63,7 @@ function Navigation() {
                     </a>
                 </li>
                 <li>
-                    <a href="#" onClick={() => history.push("/places/new")}>
-                        Add Place
-                    </a>
+                    {addPlaceButton}
                 </li>
                 {loginActions}
             </ul>

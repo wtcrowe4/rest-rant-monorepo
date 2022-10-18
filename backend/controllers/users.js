@@ -10,7 +10,8 @@ router.post('/', async (req, res) => {
         firstName,
         lastName,
         email,
-        passwordDigest: bcrypt.hashSync(password, 10)
+        passwordDigest: bcrypt.hashSync(password, 10),
+        role: 'user'
     })
     res.json(user)
 })
