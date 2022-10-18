@@ -28,8 +28,7 @@ function LoginForm() {
         if (data.error) {
             setErrorMessage(data.error)
         } else {
-            setCurrentUser(data)
-            //console.log(data.token)
+            setCurrentUser(data.user)
             localStorage.setItem('token', data.token)
             history.push(`/`)
         }

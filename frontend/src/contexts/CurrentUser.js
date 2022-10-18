@@ -6,7 +6,7 @@ export const CurrentUser = createContext()
 function CurrentUserProvider({ children }){
 
     const [currentUser, setCurrentUser] = useState(null)
-    // window.setCurrentUser = setCurrentUser
+    
 
     useEffect(() => {
         const fetchLoggedInUser = async () => {
@@ -17,6 +17,7 @@ function CurrentUserProvider({ children }){
             })
             const user = await response.json()
             setCurrentUser(user)
+            
         }
         fetchLoggedInUser()
     }, [])

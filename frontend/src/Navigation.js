@@ -22,7 +22,6 @@ function Navigation() {
             </li>
         </>
     )
-
     if (currentUser) {
         loginActions = (
             <li style={{ float: 'right' }}>
