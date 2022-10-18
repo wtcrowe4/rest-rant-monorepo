@@ -1,5 +1,10 @@
+import { useContext } from "react";
+import { CurrentUser } from "../contexts/CurrentUser";
 
 function CommentCard({ comment, onDelete }) {
+    const { currentUser } = useContext(CurrentUser)
+    //Hide delete button if user is not the author of the comment
+    const deleteButton = currentUser?.userId === comment.authorId ? <button onClick={() => onDelete(comment.commentId)} className="btn btn-danger">Delete</button> : null
     return (
         <div className="border col-sm-4">
             <h2 className="rant">{comment.rant ? 'Rant! 😡' : 'Rave! 😻'}</h2>
@@ -8,9 +13,10 @@ function CommentCard({ comment, onDelete }) {
                 <strong>- {comment.author.firstName} {comment.author.lastName}</strong>
             </h3>
             <h4>Rating: {comment.stars}</h4>
-            <button className="btn btn-danger" onClick={onDelete} >
+            {deleteButton}
+            {/* <button className="btn btn-danger" onClick={onDelete} >
                 Delete Comment
-            </button>
+            </button> */}
         </div>
     )
 }

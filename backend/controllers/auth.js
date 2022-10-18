@@ -23,45 +23,29 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/profile', async (req, res) => {
-    
-    try {
-        const [authMethod, token] = req.headers.authorization.split(' ')
-        // if (authMethod !== 'Bearer'){
-        //     res.json({error: 'Invalid authorization method'})
-        // } else {
-        //     const result = await jwt.decode(jwtSecret, token)
-        //     console.log(result)
-        //     if (result.error){
-        //         res.json({error: 'Invalid token'})
-        //     } else {
-        //         const { id } = result.value
-        //         console.log(id)
-        //         const user = await User.findOne({
-        //             where: { userId: id }
-        //         })
-        //         console.log(user)
-        //         res.json(user)
-        //     }
-        // }
-        if(authMethod === 'Bearer'){
-            const result = await jwt.decode(jwtSecret, token)
-            if(!result.error){
-                const { id } = result.value
-                const user = await User.findByPk(id)
-                res.json(user)
-            } else {
-                res.json(null)
-                console.log('Error: Invalid Token')
-            }
-        } else {
-            res.json(null)
-            console.log('Error: Invalid authorization method')
-        }
-    
-    } catch {
-        res.json(null)
-    }
-    
+    res.json(req.currentUser)
 })
+    // try {
+    //     const [authMethod, token] = req.headers.authorization.split(' ')
+    //     if(authMethod === 'Bearer'){
+    //         const result = await jwt.decode(jwtSecret, token)
+    //         if(!result.error){
+    //             const { id } = result.value
+    //             const user = await User.findByPk(id)
+    //             res.json(user)
+    //         } else {
+    //             res.json(null)
+    //             console.log('Error: Invalid Token')
+    //         }
+    //     } else {
+    //         res.json(null)
+    //         console.log('Error: Invalid authorization method')
+    //     }
+    
+    // } catch {
+    //     res.json(null)
+    // }
+    
+
 
 module.exports = router
