@@ -22,14 +22,14 @@ router.post('/', async (req, res) => {
 
 //Session
 router.get('/profile', async (req, res) => {
-    console.log(req.session.userId)
-    try {
-        const user = await User.findByPk(req.session.userId)
-        res.json(user)
-    }
-    catch (err) {
-        res.json(err)
-    }
+    res.json(req.currentUser)
+    // try {
+    //     const user = await User.findByPk(req.session.userId)
+    //     res.json(user)
+    // }
+    // catch (err) {
+    //     res.json(err)
+    // }
 })
 
 module.exports = router

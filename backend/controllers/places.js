@@ -94,22 +94,31 @@ router.post('/:placeId/comments', async (req, res) => {
         res.status(404).json({ message: `Could not find place with id "${placeId}"` })
     }
 
-    const author = await User.findOne({
-        where: { userId: req.body.authorId }
-    })
+    // let currentUser;
+    // try {
+    //     currentUser = await User.findByPk(req.session.userId)
+    // }
+    // catch {
+    //     currentUser = null;
+    // }
 
-    if (!author) {
-        res.status(404).json({ message: `Could not find author with id "${req.body.authorId}"` })
+    // if (!currentUser) {
+    //     return res.status(404).json({ message: 'You must be logged in to comment' })
+    // }
+
+    if(!req.currentUser) {
+        return res.status(404).json({ message: 'You must be logged in to comment' })
     }
-
+    
     const comment = await Comment.create({
         ...req.body,
+        authorId: req.currentUser.userId,
         placeId: placeId
     })
 
     res.send({
         ...comment.toJSON(),
-        author
+        author: req.currentUser
     })
 })
 
